@@ -81,6 +81,10 @@ func (s Server) resourceGetHandler(w http.ResponseWriter, r *http.Request, id st
 func (s Server) resourcePatchHandler(w http.ResponseWriter, r *http.Request, id string, resourceType ResourceType) {
 	patch, scimErr := resourceType.validatePatch(r)
 	if scimErr != nil {
+		s.log.Error(
+			"failed validating resource",
+			"error", scimErr,
+		)
 		s.errorHandler(w, scimErr)
 		return
 	}
@@ -130,6 +134,10 @@ func (s Server) resourcePostHandler(w http.ResponseWriter, r *http.Request, reso
 
 	attributes, scimErr := resourceType.validate(data)
 	if scimErr != nil {
+		s.log.Error(
+			"failed validating resource",
+			"error", scimErr,
+		)
 		s.errorHandler(w, scimErr)
 		return
 	}
@@ -174,6 +182,10 @@ func (s Server) resourcePutHandler(w http.ResponseWriter, r *http.Request, id st
 
 	attributes, scimErr := resourceType.validate(data)
 	if scimErr != nil {
+		s.log.Error(
+			"failed validating resource",
+			"error", scimErr,
+		)
 		s.errorHandler(w, scimErr)
 		return
 	}
